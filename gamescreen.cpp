@@ -26,7 +26,6 @@ GameScreen::GameScreen(Game* g) {
 		}
 	}
 
-	userMatrix[userMatrix.size() - 1][userMatrix[0].size() - 1] = 1;
 	nav = new Navigation((2 * userMatrix[0].size()), (2 * userMatrix.size()), this, g);
 }
 
