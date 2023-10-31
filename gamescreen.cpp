@@ -45,12 +45,21 @@ void GameScreen::Update() {
 
 		printw(" | ");
 		for (int j = 0; j < game->Column_Clues.size(); j++) {
+			if (nav->cursor_X == j) {
+				attron(COLOR_PAIR(1));
+			}
+
 			if(game->Column_Clues[j][i] != -1) {
-				printw("%d ", game->Column_Clues[j][i]);
+				printw("%d", game->Column_Clues[j][i]);
+				attroff(COLOR_PAIR(1));
+				printw(" ");
 			}
 			else {
+				attroff(COLOR_PAIR(1));
 				printw("  ");
 			}
+
+			attroff(COLOR_PAIR(1));
 		}
 		printw("\n");
 	}
@@ -58,12 +67,23 @@ void GameScreen::Update() {
 
 
 	for (int i = 0; i < totalWidth; i++) {
-		printw("-");
+		if (nav->leftBoundary + (nav->cursor_X * 2)== i) {
+			attron(COLOR_PAIR(1));
+			printw("-");
+			attroff(COLOR_PAIR(1));
+		}
+		else {
+			printw("-");
+		}
 	}
 
 	printw("\n");
 	
 	for (int j = 0; j < game->Row_Clues.size(); j++) {
+		if (nav->cursor_Y == j) {
+			attron(COLOR_PAIR(1));
+
+		}
 		for (int i = 0; i < game->Row_Clues[j].size(); i++) {
 			printw("%d ", game->Row_Clues[j][i]);
 
@@ -75,20 +95,37 @@ void GameScreen::Update() {
 		}
 
 		printw("  | ");
-		
+
 		for (int i = 0; i < userMatrix[j].size(); i++) {
 			int ipt = userMatrix[j][i];
+			bool col = 0;
+
+			if(nav->cursor_X == i || nav->cursor_Y == j) {
+				attron(COLOR_PAIR(1));
+				col = true;
+			}
 
 			if (ipt == 0) {
-				printw("  ");
+				printw(" ");
 			}
 			else if (ipt == 1) {
-				printw("X ");
+				printw("X");
 			}
 			else if (ipt == 2) {
-				printw("- ");
+				printw("-");
+			}
+			
+			if(nav->cursor_X != i || nav->cursor_Y == j) {
+				printw(" ");
+				attroff(COLOR_PAIR(1));
+			}
+			else {
+				attroff(COLOR_PAIR(1));	
+				printw(" ");
 			}
 		}
+
+		attroff(COLOR_PAIR(1));
 
 		printw("\n");
 	}

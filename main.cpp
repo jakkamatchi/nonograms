@@ -43,6 +43,13 @@ int main (int argc, char* argv[]) {
 	initscr();
 	cbreak();
 	noecho();
+	
+	if(has_colors() == false) {
+		return 1;
+	}
+
+	start_color();
+	init_pair(1, COLOR_WHITE, COLOR_RED);
 
 	Game g(x_dim, y_dim);
 	int state = 0;
@@ -62,7 +69,7 @@ int main (int argc, char* argv[]) {
 			move(g.gameScreen->nav->bottomBoundary + 2, 0);
 			printw("Incorrect !\nPress any key to keep playing !\n");
 			getch();
-
+			
 			state = 0;
 		}
 		else if (state == 3) {
