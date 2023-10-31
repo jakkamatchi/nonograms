@@ -75,6 +75,8 @@ int main (int argc, char* argv[]) {
 		printw("Success !\nPress any key to quit !\n");
 		getch();
 	}
-	
+
+	endwin();
+
 	return 0;
 }
